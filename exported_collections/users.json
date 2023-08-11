@@ -1,7 +1,0 @@
-[
-{"_id":{"$oid":"63fa1a03a6dfe0c9dfef2c32"},"Username":"Kate","Password":"Hi1234","Email":"kate@gmail.com","Birthday":"14/07/1987"},
-{"_id":{"$oid":"63fa1ad6a6dfe0c9dfef2c33"},"Username":"Jack","Password":"jax1234","Email":"jack@gmail.com","Birthday":"25/12/1990"},
-{"_id":{"$oid":"63fa1c4aa6dfe0c9dfef2c34"},"Username":"Devid","Password":"devid1234","Email":"devid@gmail.com","Birthday":"14/08/1991"},
-{"_id":{"$oid":"63fa1c9da6dfe0c9dfef2c35"},"Username":"Kyle","Password":"kyle1234","Email":"kyle@gmail.com","Birthday":"25/10/1987"},
-{"_id":{"$oid":"63fa1d25a6dfe0c9dfef2c36"},"Username":"Max","Password":"max1234","Email":"max@gmail.com","Birthday":"14/06/1986"}
-]
