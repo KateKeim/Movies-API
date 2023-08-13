@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KateKeim/myFlix-Application.git"
+    "url": "git+https://github.com/KateKeim/Movies-API.git"
   },
   "keywords": [
     "[]"
@@ -18,9 +18,9 @@
   "author": "Kate Keim",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KateKeim/myFlix-Application/issues"
+    "url": "https://github.com/KateKeim/Movies-API/issues"
   },
-  "homepage": "https://github.com/KateKeim/myFlix-Application#readme",
+  "homepage": "https://github.com/KateKeim/Movies-API#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
