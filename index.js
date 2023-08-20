@@ -154,11 +154,11 @@ app.post('/users',
 // });
 
 // Add a movie to a user's list of favorites
-app.post('/users/:userId/movies/:movieId', passport.authenticate('jwt', {session: false }), (req, res) => {
+app.put('/users/:userId/movies/:movieId', passport.authenticate('jwt', {session: false }), (req, res) => {
   const{ userId, movieId}= req.params;
 
   let user= Users.findOne({_id: userId });
-  let movie= Movies.findOne({_id: movieId });
+  let movie= Movie.findOne({_id: movieId });
 
   if (!user) {
       res.status(400).send('User not found');
