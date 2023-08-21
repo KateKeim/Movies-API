@@ -137,49 +137,6 @@ app.post('/users',
     });
 });
 
-// Add a movie to a user's list of favorites
-// app.post('/users/:Username/movies/:MovieID', (req, res) => {
-//   Users.findOneAndUpdate({ Username: req.params.Username }, {
-//      $push: { FavoriteMovies: req.params.MovieID }
-//    },
-//    { new: true }, // This line makes sure that the updated document is returned
-//   (err, updatedUser) => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).send('Error: ' + err);
-//     } else {
-//       res.json(updatedUser);
-//     }
-//   });
-// });
-
-// Add a movie to a user's list of favorites
-app.put('/users/:userId/movies/:movieId', passport.authenticate('jwt', {session: false }), (req, res) => {
-  const{ userId, movieId}= req.params;
-
-  let user= Users.findOne({_id: userId });
-  let movie= Movie.findOne({_id: movieId });
-
-  if (!user) {
-      res.status(400).send('User not found');
-  } else if (!movie) {
-      res.status(400).send('Movie not found')
-  } else {
-      Users.findOneAndUpdate({_id: req.params.userId},{
-          $addToSet: {
-              FavoriteMovies: req.params.movieId
-          },
-      },
-      {new: true}) //Returns updated object /*
-      .then( (updatedUser) => {
-          res.status(200).json(updatedUser);
-      }).catch((err) => {
-          console.error(err);
-          res.status(500).send('Error: '+ err)
-      });
-  }
-});
-
 //GET movies old
 // app.get("/movies", (req, res) => {
 //   console.log("movi get")
@@ -353,7 +310,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false }), [
 })
 
 // PUT Favorite movies
-app.put('/users/:userId/movies/:movieId', passport.authenticate('jwt', {session: false }), (req, res) => {
+app.post('/users/:userId/movies/:movieId', passport.authenticate('jwt', {session: false }), (req, res) => {
   const{ userId, movieId}= req.params;
 
   let user= Users.findOne({_id: userId });
@@ -416,7 +373,7 @@ app.get('/users', passport.authenticate("jwt", {session: false}), (req, res) => 
 // });
 
 //DELETE userID
-app.delete('/users/:id', passport.authenticate('jwt', {session: false }), (req, res) => {
+app.put('/users/:id', passport.authenticate('jwt', {session: false }), (req, res) => {
   const{ id}= req.params;
 
   let user= Users.find({_id: id});
