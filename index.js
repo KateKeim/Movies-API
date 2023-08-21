@@ -310,31 +310,50 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false }), [
 })
 
 // PUT Favorite movies
-app.post('/users/:userId/movies/:movieId', passport.authenticate('jwt', {session: false }), (req, res) => {
-  const{ userId, movieId}= req.params;
+// app.post('/users/:userId/movies/:movieId', passport.authenticate('jwt', {session: false }), (req, res) => {
+//   const{ userId, movieId}= req.params;
 
-  let user= Users.findOne({_id: userId });
-  let movie= Movies.findOne({_id: movieId });
+//   let user= Users.findOne({_id: userId });
+//   let movie= Movies.findOne({_id: movieId });
   
-  if (!user) {
-      res.status(400).send('User not found');
-  } else if (!movie) {
-      res.status(400).send('Movie not found')
-  } else {
-      Users.findOneAndUpdate({_id: req.params.userId},{
-          $pull: {
-          FavoriteMovies: req.params.movieId
-          }
+//   if (!user) {
+//       res.status(400).send('User not found');
+//   } else if (!movie) {
+//       res.status(400).send('Movie not found')
+//   } else {
+//       Users.findOneAndUpdate({_id: req.params.userId},{
+//           $pull: {
+//           FavoriteMovies: req.params.movieId
+//           }
+//       },
+//       {new: true}
+//       ).then( (updatedUser) => {
+//           res.status(200).json({updatedUser});
+//       }).catch((err) => {
+//           console.error(err);
+//           res.status(500).send('Error: '+ err)
+//       });
+//   }
+// });
+
+
+//Post favorite movie to user profile
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username },
+      {
+          $push: { FavoriteMovies: req.params.MovieID }
       },
-      {new: true}
-      ).then( (updatedUser) => {
-          res.status(200).json({updatedUser});
-      }).catch((err) => {
-          console.error(err);
-          res.status(500).send('Error: '+ err)
+      { new: true },
+      (error, UpdatedUser) => {
+          if (error) {
+              console.log(error);
+              res.status(201).send('error: ' + error);
+          } else {
+              res.json(UpdatedUser);
+          }
       });
-  }
 });
+
 
 // Get all users
 app.get('/users', passport.authenticate("jwt", {session: false}), (req, res) => {
