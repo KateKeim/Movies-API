@@ -367,32 +367,8 @@ app.get('/users', passport.authenticate("jwt", {session: false}), (req, res) => 
     });
 });
 
-
-
-
-
-
-
-
-
-// Delete a user by username old
-// app.delete('/users/:Username', (req, res) => {
-//   Users.findOneAndRemove({ Username: req.params.Username })
-//     .then((user) => {
-//       if (!user) {
-//         res.status(400).send(req.params.Username + ' was not found');
-//       } else {
-//         res.status(200).send(req.params.Username + ' was deleted.');
-//       }
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send('Error: ' + err);
-//     });
-// });
-
 //DELETE userID
-app.put('/users/:id', passport.authenticate('jwt', {session: false }), (req, res) => {
+app.delete('/users/:id', passport.authenticate('jwt', {session: false }), (req, res) => {
   const{ id}= req.params;
 
   let user= Users.find({_id: id});
@@ -408,20 +384,22 @@ app.put('/users/:id', passport.authenticate('jwt', {session: false }), (req, res
 
 
 // DELETE a movie to a user's list of favorites
-app.delete('/users/:Username/movies/:MovieID', (req, res) => {
-  Users.findOneAndUpdate({ Username: req.params.Username }, {
-     $pull: { FavoriteMovies: req.params.MovieID }
-   },
-   { new: true }, // This line makes sure that the updated document is returned
-  (err, updatedUser) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error: ' + err);
-    } else {
-      res.json(updatedUser);
-    }
-  });
-});
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username },
+      {
+          $pull: { FavoriteMovies: req.params.MovieID }
+      },
+      { new: true },
+
+      (error, UpdatedUser) => {
+          if (error) {
+              console.error(error);
+              res.status(500).send('error: ' + error);
+          } else {
+              res.json(UpdatedUser);
+          }
+      });
+})
 
 //Error handling middleware
 app.use((err, req, res, next) => {
